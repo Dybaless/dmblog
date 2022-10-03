@@ -6,32 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Personnages</title>
+    <title>Commentaire</title>
 </head>
 
 <body>
-    <?php
-    require('connexion.php');
-    ?>
     <header class="container">
-    <h1>Mini jeu de combats</h1>
+    <h1>Commentaire des arcticles</h1>
         <nav class="nav">
-            <?php
-            require ('menu.php');
-            ?>
         </nav>
     </header>
     
         }
 
     <main class="container">
-     <div class="row">
+    <div class="row">
         <div class="col-6 mt-5">
         <?php
         if(isset( $_GET['supp'] ) ) {
-            $sql = "DELETE FROM personnage WHERE id=" . $_GET['id'];
+            $sql = "DELETE FROM commentaire WHERE id=" . $_GET['id'];
             if(  $db->exec( $sql ) ) {
-                echo '<p> Personnage supprimé</p>';
+                echo '<p> Commentaire supprimé</p>';
             } else {
                 echo '<p> Erreur lors de la suppresion</p>';
             }
@@ -44,7 +38,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Supprimer</th>
-                        <th scope="col">Personnage</th>
+                        <th scope="col">commentaires</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,20 +47,21 @@
                     $response = $db->query( $sql );
                     $listPerso = $response->fetchAll();
 
-                    foreach( $listPerso as $cle=>$perso ) {
-                        echo '<tr><th scope="row">' . $perso['id'] . 
-                        '</th><td><a href="personnage.php?id=' . $perso['id'] . '&supp">x</a></td><td>'
-                        . $perso['nom'] . '</td></tr>';
+                    foreach( $listComme as $cle=>$comme ) {
+                        echo '<tr><th scope="row">' . $comme['id'] . 
+                        '</th><td><a href="personnage.php?id=' . $comme['id'] . '&supp">x</a></td><td>'
+                        . $commme['nom'] . '</td></tr>';
                     }
                 ?>
                 </tbody>
             </table>
         </div>
         <div class="col-6 mt-5">
-            <h6> Ajouter des personnages </h6>
+            <h6> Ajouter des commentaires </h6>
         </div>
     </div>
     </main>
+
 
     <footer class="container">
 

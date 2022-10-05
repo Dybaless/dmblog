@@ -6,65 +6,59 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Commentaire</title>
+    <title>DM Blog</title>
 </head>
 
 <body>
+    <?php
+    try
+    {
+        $db = new PDO("mysql:host=localhost:3306;dbname=alessandro;charset=utf8", "alessandro", "iepeij3O");
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    }
+    catch( Execption $e )
+    {
+        die( "Erreur : " . $e->getMessage());
+    }
+    ?>
+
+
     <header class="container">
-    <h1>Commentaire des arcticles</h1>
-        <nav class="nav">
-        </nav>
+    <h1>Mon Blog</h1>
     </header>
-    
-        }
+<main class="container">
+        <div class="row">
+        <div class="col-12 mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Contenu</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = "SELECT * FROM billets"; 
+            $response = $db->query( $sql );
+            $redirection = $response->fetchAll();
 
-    <main class="container">
-    <div class="row">
-        <div class="col-6 mt-5">
-        <?php
-        if(isset( $_GET['supp'] ) ) {
-            $sql = "DELETE FROM commentaire WHERE id=" . $_GET['id'];
-            if(  $db->exec( $sql ) ) {
-                echo '<p> Commentaire supprimé</p>';
-            } else {
-                echo '<p> Erreur lors de la suppresion</p>';
+            foreach( $redirection as $cle=>$blog) {
+                $monScript = '#';
+                if (!empty($blog['script'])) {
+                    $monScript = $blog['script'];
+                }
+                echo '<tr><th scope="row"><a class="nav-link " href="' .$monScript . '">' . $blog['ID'] . '</th><td>' . $blog['titre'] . '</td><td>' . $blog['date_creation'] . '</td><td>' . $blog['contenu'] . '</td></tr>';
             }
-        }    
-        ?>
-        <h6>Liste des personnages</h6><br>
-        <p>Choisir un personnage à modifier :</p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Supprimer</th>
-                        <th scope="col">commentaires</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $sql = "SELECT * FROM personnage"; 
-                    $response = $db->query( $sql );
-                    $listPerso = $response->fetchAll();
-
-                    foreach( $listComme as $cle=>$comme ) {
-                        echo '<tr><th scope="row">' . $comme['id'] . 
-                        '</th><td><a href="personnage.php?id=' . $comme['id'] . '&supp">x</a></td><td>'
-                        . $commme['nom'] . '</td></tr>';
-                    }
-                ?>
-                </tbody>
-            </table>
+            ?>
+            </tbody>
+        </table>
         </div>
-        <div class="col-6 mt-5">
-            <h6> Ajouter des commentaires </h6>
         </div>
-    </div>
     </main>
 
-
     <footer class="container">
-
     </footer>
 </body>
 </html>
